@@ -1,22 +1,5 @@
 # pagePiling.js
 
-
-Pile your sections one over another and access them scrolling or by URL!
-
-![pagePiling.js version](http://img.shields.io/badge/fullPage.js-v1.5.6-brightgreen.svg)
-
-- [Live demo](http://alvarotrigo.com/pagePiling/)
-- [Creating hugeinc.com website with pagePiling.js](http://www.onextrapixel.com/2015/04/09/how-to-create-a-beautiful-fullscreen-single-scrolling-page-like-huge-inc/)
-- [Who is using it](https://github.com/alvarotrigo/pagePiling.js#who-is-using-pagepilingjs)
-
-Invite me to a coffee
-[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=BEK5JQCQMED4J&lc=GB&item_name=pagePiling%2ejs&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
-
-Customizations of the plugin available upon request for some reasonable price. <a href="http://alvarotrigo.com/#contact-page">Contact me</a>.
-
-Would you like to have a website using pilePage.js functionality but you don't know how to use it? I can do it for you for a reasonable price. <a href="http://alvarotrigo.com/#contact-page">Contact me</a>.
-
-## Introduction
 Suggestion are more than welcome, not only for feature requests but also for coding style improvements.
 Let's make this a great plugin to make people's lives easier!
 
@@ -314,53 +297,4 @@ Example:
 [CSS Easing Animation Tool - Matthew Lein](http://matthewlein.com/ceaser/)
 
 
-## Who is using pagePiling.js
-If you want your page to be listed here. Please <a href="mailto:alvaro@alvarotrigo.com">contact me</a> with the URL.
-
-[![Facebook](http://wallpapers-for-ipad.com/fullpage/imgs3/logos/facebook-pagepiling.gif)](http://www.facebookgroups.com/)
-[![WaltDisney](http://wallpapers-for-ipad.com/fullpage/imgs3/logos/waltDisney.gif)](http://waltdisney.org/galleries)
-[![Logitech](http://wallpapers-for-ipad.com/fullpage/imgs3/logos/logitech.gif)](http://www.logitech.com/en-gb)
-
-- http://www.facebookgroups.com/
-- http://waltdisney.org/galleries
-- http://www.logitech.com/en-gb
-- http://www.adigoodrich.com/
-- https://number26.de/
-- http://fngeats.com/
-- http://ednahouse.org/statistics/
-- http://sushi.steadfastlight.com/
-- http://netstorage.com.br/nucs/nucs.html
-- http://aungthurhahein.me/
-- http://mannydesigns.co
-- http://www.unwander.com/
-
-## Donations
-Donations would be more than welcome :)
-
-[![Donate](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=BEK5JQCQMED4J&lc=GB&item_name=pagePiling%2ejs&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
-
-
-## License
-
-(The MIT License)
-
-Copyright (c) 2014 Alvaro Trigo &lt;alvaro@alvarotrigo.com&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+TWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

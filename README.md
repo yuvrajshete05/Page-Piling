@@ -1,7 +1,6 @@
 # pagePiling.js
 
-![preview](https://raw.github.com/alvarotrigo/pagePiling.js/master/examples/imgs/pagePiling-plugin.png)
-![compatibility](https://raw.github.com/alvarotrigo/pagePiling.js/master/examples/imgs/compatible.gif)\
+
 Pile your sections one over another and access them scrolling or by URL!
 
 ![pagePiling.js version](http://img.shields.io/badge/fullPage.js-v1.5.6-brightgreen.svg)

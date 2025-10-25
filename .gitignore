@@ -1,0 +1,16 @@
+node_modules/
+npm-debug.log
+.DS_Store
+.sass-cache/
+.cache/
+dist/
+/.idea/
+.vscode/
+coverage/
+*.log
+env/
+.env
+/.sass-cache
+/*.tgz.DS_Store
+bower_components/
+/node_modules

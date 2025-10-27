@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>pagePiling.js plugin</title>
+	<meta name="author" content="Alvaro Trigo Lopez" />
+	<meta name="description" content="pagePiling.js plugin by Alvaro Trigo." />
+	<meta name="keywords"  content="pile,piling,piling.js,stack,pages,scrolling,stacking,touch,fullpile,scroll,plugin,jquery" />
+	<meta name="Resource-type" content="Document" />
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,700" />
+	<link rel="stylesheet" type="text/css" href="../jquery.pagepiling.css" />
+	<link rel="stylesheet" type="text/css" href="examples.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+	<script type="text/javascript" src="../jquery.pagepiling.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			/*
+			* Plugin intialization
+			*/
+	    	$('#pagepiling').pagepiling({
+	    		menu: '#menu',
+	    		anchors: ['page1', 'page2', 'page3', 'page4'],
+			    sectionsColor: ['white', '#ee005a', '#2C3E50', '#39C'],
+			    navigation: {
+			    	'position': 'right',
+			   		'tooltips': ['Page 1', 'Page 2', 'Page 3', 'Page 4']
+			   	},
+			    afterRender: function(){
+			    	$('#pp-nav').addClass('custom');
+			    },
+			    afterLoad: function(anchorLink, index){
+			    	if(index>1){
+			    		$('#pp-nav').removeClass('custom');
+			    	}else{
+			    		$('#pp-nav').addClass('custom');
+			    	}
+			    }
+			});
+
+
+			/*
+		    * Internal use of the demo website
+		    */
+		    $('#showExamples').click(function(e){
+				e.stopPropagation();
+				e.preventDefault();
+				$('#examplesList').toggle();
+			});
+
+			$('html').click(function(){
+				$('#examplesList').hide();
+			});
+	    });
+    </script>
+
+
+    <style>
+    /* Section 1
+	 * --------------------------------------- */
+	#section1 h1{
+		color: #444;
+	}
+	#section1 p{
+		color: #333;
+		color: rgba(0,0,0,0.3);
+	}
+	#section1 img{
+		margin: 20px 0;
+		opacity: 0.7;
+	}
+
+	/* Section 2
+	 * --------------------------------------- */
+	#section2 h1,
+	#section2 p{
+		z-index: 3;
+	}
+	#section2 p{
+		opacity: 0.8;
+	}
+
+	#section2 #colors{
+		right: 60px;
+		bottom: 0;
+		position: absolute;
+		height: 413px;
+		width: 258px;
+
+		background-repeat: no-repeat;
+	}
+
+	/* Section 3
+	 * --------------------------------------- */
+	#section3 #colors{
+		left: 60px;
+		bottom: 0;
+	}
+	#section3 p{
+		color: #757575;
+	}
+
+	#colors2,
+	#colors3{
+		position: absolute;
+		height: 163px;
+		width: 362px;
+		z-index: 1;
+		background-repeat: no-repeat;
+		left: 0;
+		margin: 0 auto;
+		right: 0;
+	}
+	#colors2{
+		top:0;
+	}
+	#colors3{
+		bottom:0;
+	}
+
+	/* Section 4
+	 * --------------------------------------- */
+	#section4 p{
+		opacity: 0.6;
+	}
+
+	/* Overwriting fullPage.js tooltip color
+	* --------------------------------------- */
+	#pp-nav.custom .pp-tooltip{
+		color: #AAA;
+	}
+	#markup{
+		display: block;
+		width: 450px;
+		margin: 20px auto;
+		text-align: left;
+	}
+
+</style>
+
+</head>
+<body>
+	<nav id="menu" role="navigation" aria-label="Main navigation" data-transparent="false" style="position:fixed;top:16px;left:0;right:0;width:70%;margin:0 auto;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;font-family:'Lato',sans-serif;border-radius:30px;background:#fff;color:#000;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+			<style>
+				#menu .brand{ font-weight:700; font-size:18px; color:#000; user-select:none; }
+				#menu ul{ display:flex; gap:18px; list-style:none; margin:0; padding:0; align-items:center; }
+
+				/* Interactive link styles */
+				#menu a{
+					text-decoration:none;
+					color:#000;
+					padding:8px 12px;
+					border-radius:6px;
+					display:inline-block;
+					position:relative;
+					-webkit-tap-highlight-color: transparent;
+					transition: color .18s ease;
+					will-change: color;
+				}
+
+				/* Hover underline: only line effect (no lift, no shadow, no bg change) */
+				#menu a::after{
+					content: "";
+					position: absolute;
+					left: 50%;
+					bottom: 6px;
+					transform: translateX(-50%) scaleX(0);
+					transform-origin: center;
+					height: 2px;
+					width: 60%;
+					background: rgba(0,0,0,0.85);
+					border-radius: 2px;
+					transition: transform .18s ease;
+					pointer-events: none;
+				}
+
+				/* On hover/focus only reveal the underline (no other visual changes) */
+				#menu a:hover,
+				#menu a:focus,
+				#menu a:focus-visible{
+					/* intentionally left minimal: no transform, no shadow, no bg */
+					outline: none;
+				}
+
+				#menu a:hover::after,
+				#menu a:focus::after,
+				#menu a:focus-visible::after{
+					transform: translateX(-50%) scaleX(1);
+				}
+
+				/* Active item style: only color inversion + underline, no lift or shadow */
+				#menu li.active a{
+					background: transparent;
+					color:#000;
+				}
+				#menu li.active a::after{ background: rgba(0,0,0,0.85); transform: translateX(-50%) scaleX(1); }
+
+				/* Respect reduced motion preference */
+				@media (prefers-reduced-motion: reduce){
+					#menu a,
+					#menu a::after{ transition: none !important; transform: none !important; }
+				}
+			</style>
+
+		<div class="brand">CoreShift</div>
+
+			<ul>
+				<li data-menuanchor="page1" class="active"><a href="#page1" aria-current="page">Products</a></li>
+				<li data-menuanchor="page2"><a href="#page2">Features</a></li>
+				<li data-menuanchor="page3"><a href="#page3">Pricing</a></li>
+				<li data-menuanchor="page4"><a href="#page4">Resources</a></li>
+			</ul>
+		</nav>
+
+
+
+<!-- ============================================================================================================================================================= -->
+
+
+
+
+<div id="pagepiling">	
+	<div class="section" id="section1">
+		<div class="hero-hr" role="region" aria-label="Hero area">
+			<!-- central content -->
+			<!-- set --hero-offset inline to move this block down; change value manually (e.g. --hero-offset:160px) -->
+			<div class="hero-center" role="region" aria-label="Hero" style="--hero-offset:140px;">
+				<div aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="68" height="68" aria-hidden="true" focusable="false">
+						<rect x="0" y="0" width="24" height="24" rx="6" fill="#6b5cf6"></rect>
+						<!-- centered white outline circle -->
+						<circle cx="12" cy="12" r="9.5" fill="none" stroke="#fff" stroke-width="2"></circle>
+						<path d="M6.5 12.5l3 3L17.5 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+					</svg>
+			    </div>
+
+				<div style="height:0.8cm" aria-hidden="true"></div>
+
+				<h1 style="color:#000000; font-weight:900;">All-in-one HR <br> platform</h1>
+				<p class="lead" style="margin-top:18px;">Centralize HR processes, onboard employees and measure performance — designed to grow with your team's needs.</p>
+				<button class="cta" aria-label="Request a demo">Request a demo</button>
+			</div>
+
+			<!-- surrounding nodes + small avatars -->
+			<div class="node node-a" aria-hidden="true">
+				<div class="node-card" style="background: rgb(233, 233, 66);">
+					<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+						<path d="M9 18h6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+						<path d="M12 3a4 4 0 00-4 4c0 2 1 3 1.6 3.8A2.5 2.5 0 0110 14v1h4v-1c0-1.1.4-2.2 1.4-3.2C16 10 17 9 17 7a4 4 0 00-5-4z" fill="#fff"/>
+					</svg>
+				</div>
+			</div>
+
+			<div class="node node-b" aria-hidden="true">
+				<div class="node-card" style="background:#ea4c18;">
+					<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+						<path d="M12 3l6 3v5c0 5-3 9-6 10-3-1-6-5-6-10V6l6-3z" fill="#fff"/>
+					</svg>
+				</div>
+			</div>
+
+			<div class="node node-c" aria-hidden="true">
+				<div class="node-card" style="overflow:hidden; border-radius:14px;">
+					<!-- <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+						<rect x="4" y="10" width="3" height="8" rx="1" fill="#fff"/>
+						<rect x="10.5" y="6" width="3" height="12" rx="1" fill="#fff"/>
+						<rect x="17" y="2" width="3" height="16" rx="1" fill="#fff"/>
+					</svg> -->
+
+					<img src="https://cdn.pixabay.com/photo/2023/12/19/22/46/business-8458541_1280.jpg" alt="" aria-hidden="true" loading="lazy" style="display:block;width:110%;height:110%;object-fit:cover; border-radius: 2%;">
+				</div>
+			</div>
+
+			<div class="node node-d" aria-hidden="true">
+				<div class="node-card" style="background:#39c;">
+					<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+						<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" fill="#fff"/>
+						<circle cx="12" cy="12" r="2.5" fill="#6b5cf6"/>
+					</svg>
+				</div>
+			</div>
+
+			
+			<div style="height:5cm;width:1px;" aria-hidden="true"></div>
+
+			<div class="node node-e" aria-hidden="true">
+				<div class="node-card" style=" overflow:hidden; border-radius:14px;">
+					<!-- <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+						<rect x="4" y="10" width="3" height="8" rx="1" fill="#fff"/>
+						<rect x="10.5" y="6" width="3" height="12" rx="1" fill="#fff"/>
+						<rect x="17" y="2" width="3" height="16" rx="1" fill="#fff"/>
+					</svg> -->
+
+					<img src="https://gravallvar.se/wp-content/uploads/2017/11/person-dummy.jpg" alt="" aria-hidden="true" loading="lazy" style="display:block;width:110%;height:110%;object-fit:cover; border-radius: 2%;">
+				</div>
+			</div>
+
+			
+
+			<div class="node node-f" aria-hidden="true" aria-label="Node F (positioned top-right)">
+				<div class="node-card" style=" overflow:hidden; border-radius:14px;">
+					<img src="https://png.pngtree.com/png-clipart/20230118/original/pngtree-two-emoji-eyes-glance-sideways-png-image_8920586.png" alt="" aria-hidden="true" loading="lazy" style="display:block;width:110%;height:110%;object-fit:cover;border:2px solid rgba(255,255,255,0.9);">
+				</div>
+			</div>
+
+
+			<!-- thin subtle connector lines -->
+			<svg class="connectors" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+				<path class="line a" d="M500 210 L220 90" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round"/>
+				<path class="line b" d="M500 210 L780 80" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round"/>
+				<path class="line c" d="M500 210 L800 270" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round"/>
+				<path class="line d" d="M500 210 L220 280" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round"/>
+				<path class="line e" d="M500 210 L800 270" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round" transform="rotate(170, 500, 210)"/>
+				<path class="line f" d="M500 210 L220 280" stroke="rgba(16,24,40,0.06)" stroke-width="2" fill="none" stroke-linecap="round" transform="rotate(190, 500, 210)"/>
+			</svg>
+		</div>
+
+
+		
+
+		<style>
+			:root{ --nav-offset: 80px; }
+
+			/* Use --hero-offset to move the hero content down. Adjust manually per your needs. */
+			#section1 {
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				background: #fff;
+				overflow:hidden;
+
+				/* prevent content from being covered by fixed navbar */
+				padding-top: var(--nav-offset);
+				min-height: calc(100vh - var(--nav-offset));
+				box-sizing: border-box;
+			}
+
+			.hero-hr{ position:relative; width:100%; max-width:1100px; height:460px; margin:0 auto; }
+			/* hero-center position uses --hero-offset for easy manual control */
+			.hero-center{ position:absolute; left:50%; top:calc(48% + var(--hero-offset, 140px)); transform:translate(-50%,-50%); text-align:center; z-index:6; width:58%; max-width:620px; display:flex; flex-direction:column; align-items:center; gap:12px; }
+			.central-card{ width:104px; height:104px; margin:0 auto 0; border-radius:18px; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#7b6cff,#5a49ff); box-shadow:0 18px 40px rgba(107,92,246,0.12); }
+			.hero-center h1{ font-family:'Lato',sans-serif; font-size:36px; line-height:1.05; margin:6px 0 8px; color:black; font-weight:700; letter-spacing:-0.2px; }
+			.hero-center .lead{ color:#6b6b6b; margin:0 0 18px; font-size:15px; opacity:0.95; max-width:720px; margin-left:auto; margin-right:auto; }
+			.cta{ background:#ea4c18; color:#fff; border:none; padding:12px 20px; border-radius:26px; font-weight:700; cursor:pointer; box-shadow:0 10px 30px rgba(8, 8, 8, 0.14); transition:transform .12s ease, box-shadow .12s ease; }
+			.cta:active{ transform:translateY(1px); }
+			.cta:focus{ outline:2px solid rgba(107,92,246,0.12); outline-offset:3px; }
+
+			/* nodes */
+			.node{ position:absolute; z-index:5; display:flex; align-items:center; gap:12px; pointer-events:none; transform:translateZ(0); }
+			.node .node-card{ width:66px; height:66px; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 36px rgba(16,24,40,0.06); border:1px solid rgba(0,0,0,0.04); }
+			.node .avatar{ width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:12px; box-shadow:0 8px 22px rgba(16,24,40,0.06); }
+
+			/* positions tuned to match the reference */
+			.node-a{ left:14.5%; top:12%; flex-direction:column-reverse; gap:8px; }
+			.node-b{ right:14.5%; top:10%; flex-direction:column-reverse; gap:8px; }
+			.node-c{ right:13%; bottom:24%; flex-direction:column-reverse; gap:8px; }
+			.node-d{ left:15%; bottom:22%; flex-direction:column-reverse; gap:8px; }
+			.node-e{ left:1%; top:40%; flex-direction:column-reverse; gap:8px; }
+			.node-f{ left:95%; top:6%; flex-direction:column-reverse; gap:8px; }
+
+			/* place node-f in the right corner (top-right) */
+			.node-f{ right:6%; top:39%; flex-direction:column-reverse; gap:8px; }
+
+			.avatar.small{ background:linear-gradient(135deg,#6b5cf6,#9b8cff); width:36px; height:36px; font-size:12px; }
+			.avatar.small.two{ background:linear-gradient(135deg,#ff7a7a,#ffb3b3); }
+			.avatar.small.three{ background:linear-gradient(135deg,#39c,#6ec6ff); color:#fff; }
+			.avatar.small.four{ background:linear-gradient(135deg,#ffd166,#ffb84d); color:#2d2d2d; }
+
+			.connectors{ position:absolute; inset:0; width:100%; height:100%; z-index:3; pointer-events:none; }
+			.line{ opacity:0.85; filter:blur(0.0px); }
+
+			/* subtle decorative background circles to match the soft UI in the reference */
+			.hero-hr::before,
+			.hero-hr::after{
+				content:"";
+				position:absolute;
+				width:260px;
+				height:260px;
+				border-radius:50%;
+				z-index:1;
+				pointer-events:none;
+				opacity:0.06;
+				filter:blur(18px);
+			}
+			.hero-hr::before{ right:6%; top:4%; background:linear-gradient(135deg,#ff6b6b,#ffd166); }
+			.hero-hr::after{ left:6%; bottom:6%; background:linear-gradient(135deg,#6b5cf6,#39c); }
+
+			/* responsive adjustments */
+			@media (max-width:980px){
+				.hero-hr{ height:420px; max-width:900px; }
+				/* reduce the offset on smaller screens for better fit */
+				.hero-center{ width:84%; top:calc(46% + var(--hero-offset, 80px)); }
+				.central-card{ width:86px; height:86px; }
+				.hero-center h1{ font-size:28px; }
+				.node .node-card{ width:54px; height:54px; }
+				.avatar.small{ width:30px; height:30px; font-size:11px; }
+				.node-a{ left:4%; top:8%; }
+				.node-b{ right:4%; top:6%; }
+				.node-c{ right:6%; bottom:10%; }
+				.node-d{ left:6%; bottom:8%; }
+				.hero-hr::before, .hero-hr::after{ display:none; }
+
+				/* ensure node-f remains visible on smaller screens */
+				.node-f{ right:4%; top:6%; }
+			}
+
+			/* respect reduced motion */
+			@media (prefers-reduced-motion: reduce){
+				.central-card, .node .node-card, .avatar.small, .cta{ transition:none !important; transform:none !important; }
+			}
+		</style>
+	</div>
+
+
+
+<!-- ============================================================================================================================================================= -->
+
+
+		
+	    <div class="section" id="section2">
+	    	<div class="intro">
+	    		<div id="colors"></div>
+	    		<h1>jQuery plugin</h1>
+	    		<p>Pile your sections one over another and access them scrolling or by URL!</p>
+	    		<div id="markup">
+	    			<script src=""></script>
+	    		</div>
+	    	</div>
+	    </div>
+
+
+	    <div class="section" id="section3">
+	    	<div class="intro">
+	    		<h1>Configurable</h1>
+	    		<p>Plenty of options, methods and callbacks to use.</p>
+	    		<div id="colors2"></div>
+	    		<div id="colors3"></div>
+	    	</div>
+	    </div>
+
+
+	    <div class="section" id="section4">
+	    	<div class="intro">
+	    		<h1>Compatible</h1>
+	    		<p>Designed to work on tablet and mobile devices.</p>
+	    		<p>Oh! And its compatible with old browsers such as IE 8 or Opera 12!</p>
+	    	</div>
+	    </div>
+
+		
+	</div>
+
+</body>
+</html>

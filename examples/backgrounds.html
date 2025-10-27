@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>pagePiling.js plugin</title>
+	<meta name="author" content="Alvaro Trigo Lopez" />
+	<meta name="description" content="pagePiling.js plugin by Alvaro Trigo." />
+	<meta name="keywords"  content="pile,piling,piling.js,stack,pages,scrolling,stacking,touch,fullpile,scroll,plugin,jquery" />
+	<meta name="Resource-type" content="Document" />
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,700" />
+	<link rel="stylesheet" type="text/css" href="../jquery.pagepiling.css" />
+	<link rel="stylesheet" type="text/css" href="examples.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+	<script type="text/javascript" src="../jquery.pagepiling.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			/*
+			* Plugin intialization
+			*/
+	    	$('#pagepiling').pagepiling({
+	    		menu: '#menu',
+	    		anchors: ['page1', 'page2', 'page3', 'page4'],
+			    sectionsColor: ['white', '#ee005a', '#2C3E50', '#39C'],
+			    navigation: {
+			    	'position': 'right',
+			   		'tooltips': ['Page 1', 'Page 2', 'Page 3', 'Page 4']
+			   	},
+			    afterRender: function(){
+			    	$('#pp-nav').addClass('custom');
+			    },
+			    afterLoad: function(anchorLink, index){
+			    	if(index>1){
+			    		$('#pp-nav').removeClass('custom');
+			    	}else{
+			    		$('#pp-nav').addClass('custom');
+			    	}
+			    }
+			});
+
+
+			/*
+		    * Internal use of the demo website
+		    */
+		    $('#showExamples').click(function(e){
+				e.stopPropagation();
+				e.preventDefault();
+				$('#examplesList').toggle();
+			});
+
+			$('html').click(function(){
+				$('#examplesList').hide();
+			});
+	    });
+    </script>
+
+
+    <style>
+    /* Section 1
+	 * --------------------------------------- */
+	#section1 h1{
+		color: #444;
+	}
+	#section1 p{
+		color: #333;
+		color: rgba(0,0,0,0.3);
+	}
+	#section1 img{
+		margin: 20px 0;
+		opacity: 0.7;
+	}
+
+	/* Section 2
+	 * --------------------------------------- */
+	#section2 h1,
+	#section2 p{
+		z-index: 3;
+	}
+	#section2 p{
+		opacity: 0.8;
+	}
+
+
+
+	/* Section 3
+	 * --------------------------------------- */
+	#section3 #colors{
+		left: 60px;
+		bottom: 0;
+	}
+	#section3 p{
+		color: #757575;
+	}
+
+	#colors2,
+	#colors3{
+		position: absolute;
+		height: 163px;
+		width: 362px;
+		z-index: 1;
+		background-repeat: no-repeat;
+		left: 0;
+		margin: 0 auto;
+		right: 0;
+	}
+	#colors2{
+		/* background-image: url(imgs/colors2.gif); */
+		top:0;
+	}
+	#colors3{
+		/* background-image: url(imgs/colors3.gif); */
+		bottom:0;
+	}
+
+	/* Section 4
+	 * --------------------------------------- */
+	#section4 p{
+		opacity: 0.6;
+	}
+
+	/* Overwriting fullPage.js tooltip color
+	* --------------------------------------- */
+	#pp-nav.custom .pp-tooltip{
+		color: #AAA;
+	}
+	#markup{
+		display: block;
+		width: 450px;
+		margin: 20px auto;
+		text-align: left;
+	}
+
+</style>
+
+</head>
+<body>
+		<nav id="menu" role="navigation" aria-label="Main navigation" data-transparent="false" style="position:fixed;top:16px;left:0;right:0;width:70%;margin:0 auto;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;font-family:'Lato',sans-serif;border-radius:30px;background:#fff;color:#000;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+			<style>
+				#menu .brand{ font-weight:700; font-size:18px; color:#000; user-select:none; }
+				#menu ul{ display:flex; gap:18px; list-style:none; margin:0; padding:0; align-items:center; }
+
+				/* Interactive link styles */
+				#menu a{
+					text-decoration:none;
+					color:#000;
+					padding:8px 12px;
+					border-radius:6px;
+					display:inline-block;
+					position:relative;
+					-webkit-tap-highlight-color: transparent;
+					transition: color .18s ease;
+					will-change: color;
+				}
+
+				/* Hover underline: only line effect (no lift, no shadow, no bg change) */
+				#menu a::after{
+					content: "";
+					position: absolute;
+					left: 50%;
+					bottom: 6px;
+					transform: translateX(-50%) scaleX(0);
+					transform-origin: center;
+					height: 2px;
+					width: 60%;
+					background: rgba(0,0,0,0.85);
+					border-radius: 2px;
+					transition: transform .18s ease;
+					pointer-events: none;
+				}
+
+				/* On hover/focus only reveal the underline (no other visual changes) */
+				#menu a:hover,
+				#menu a:focus,
+				#menu a:focus-visible{
+					/* intentionally left minimal: no transform, no shadow, no bg */
+					outline: none;
+				}
+
+				#menu a:hover::after,
+				#menu a:focus::after,
+				#menu a:focus-visible::after{
+					transform: translateX(-50%) scaleX(1);
+				}
+
+				/* Active item style: only color inversion + underline, no lift or shadow */
+				#menu li.active a{
+					background: transparent;
+					color:#000;
+				}
+				#menu li.active a::after{ background: rgba(0,0,0,0.85); transform: translateX(-50%) scaleX(1); }
+
+				/* Respect reduced motion preference */
+				@media (prefers-reduced-motion: reduce){
+					#menu a,
+					#menu a::after{ transition: none !important; transform: none !important; }
+				}
+			</style>
+
+		<div class="brand">CoreShift</div>
+
+			<ul>
+				<li data-menuanchor="page1" class="active"><a href="#page1" aria-current="page">Products</a></li>
+				<li data-menuanchor="page2"><a href="#page2">Features</a></li>
+				<li data-menuanchor="page3"><a href="#page3">Pricing</a></li>
+				<li data-menuanchor="page4"><a href="#page4">Resources</a></li>
+			</ul>
+		</nav>
+
+<!-- ==================================================================================================================================================================================		 -->
+ 
+				<div id="pagepiling">
+				<div class="section" id="section1">
+					<style>
+
+						#hr-platform-local {
+							font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+						}
+
+						#hr-platform-local .hr-body {
+							margin: 0;
+							padding: 0;
+							background-color: transparent;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						/* --- Main Container Styling --- */
+						#hr-platform-container {
+							background-color: white;
+							border-radius: 16px;
+							box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+							padding: 60px 40px;
+							text-align: center;
+							max-width: 1100px;
+							width: 90%;
+							margin: 20px auto;
+							position: relative; /* Crucial for absolute positioning of graphics */
+							overflow: hidden;
+						}
+
+						/* --- Text Styling --- */
+						.headline {
+							font-size: 2.2vw;
+							font-weight: 900;
+							color: #1a1a1a;
+							line-height: 1.1;
+							margin-top: 0px;
+						}
+
+						.subtext {
+							font-size: 16px;
+							color: #6a6a6a;
+							margin-top: 15px;
+							max-width: 450px;
+							margin-left: auto;
+							margin-right: auto;
+							line-height: 1.5;
+						}
+
+						/* --- Button Styling --- */
+						.request-button {
+							background-color: #ff6f4e;
+							color: white;
+							border: none;
+							padding: 12px 28px;
+							font-size: 16px;
+							font-weight: 600;
+							border-radius: 10px;
+							cursor: pointer;
+							margin-top: 30px;
+							transition: background-color 0.2s;
+							box-shadow: 0 4px 10px rgba(255, 111, 78, 0.4);
+							display: block; /* Make it a block element to center it */
+							margin-left: auto;
+							margin-right: auto;
+						}
+
+						.request-button:hover {
+							background-color: #e56447;
+						}
+
+						/* --- Graphical Layout (Flexbox) --- */
+						.graphic-container {
+							position: relative;
+							height: 150px;
+							margin-bottom: 20px;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							padding: 0 10%;
+						}
+
+						/* Connecting Line (Dashed) */
+						.connecting-line {
+							position: absolute;
+							top: 50%;
+							left: 10%;
+							right: 10%;
+							height: 2px;
+							background: repeating-linear-gradient(
+								to right,
+								#ccc,
+								#ccc 5px,
+								transparent 5px,
+								transparent 10px
+							);
+							transform: translateY(-50%);
+							z-index: 1;
+						}
+
+						/* Diagonal lines: 45° and 135° with fixed length 7cm */
+						.diag-line{
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							width: 15cm;              /* requested fixed length */
+							height: 2px;
+							background: repeating-linear-gradient(
+								to right,
+								#ccc,
+								#ccc 5px,
+								transparent 5px,
+								transparent 10px
+							);
+							transform-origin: center center;
+							/* center the line on the container center then rotate */
+							transform: translate(-50%,-50%);
+							z-index: 1;
+							border-radius: 1px;
+						}
+						/* 45 degrees */
+						.diag-45{ transform: translate(-50%,-50%) rotate(10deg); }
+						/* 135 degrees */
+						.diag-135{ transform: translate(-50%,-50%) rotate(170deg); }
+
+						/* Icon Wrapper Styles */
+						.icon-wrapper {
+							width: 60px;
+							height: 60px;
+							border-radius: 16px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							position: relative;
+							z-index: 2;
+							box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+						}
+
+						.icon-wrapper.center-icon {
+							width: 80px;
+							height: 80px;
+							border-radius: 20px;
+							background-color: #925cff; /* Purple */
+							box-shadow: 0 6px 15px rgba(146, 92, 255, 0.5);
+						}
+
+						/* Specific Icon Colors */
+						.icon-1 { background-color: #ffc844; } /* Yellow */
+						.icon-2 { background-color: #69c0ff; } /* Light Blue */
+						.icon-4 { background-color: #ff5c77; } /* Red/Pink */
+						.icon-5 { background-color: #eaeaea; } /* Light Gray/White for eyes */
+
+						/* Avatars/Images */
+						.avatar {
+							width: 50px;
+							height: 50px;
+							border-radius: 50%;
+							position: absolute;
+							object-fit: cover;
+							border: 3px solid white;
+							box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+							z-index: 3;
+						}
+
+						.avatar-left { top: 20%; left: 5%; }
+						.avatar-right { top: 60%; right: 5%; }
+
+						/* Eye Icon Detail */
+						.icon-eyes {
+							width: 100%;
+							height: 100%;
+							display: flex;
+							justify-content: space-around;
+							align-items: center;
+						}
+						.eye {
+							width: 15px;
+							height: 15px;
+							background-color: #1a1a1a;
+							border-radius: 50%;
+							position: relative;
+						}
+						.eye::after {
+							content: '';
+							position: absolute;
+							top: 3px;
+							left: 3px;
+							width: 4px;
+							height: 4px;
+							background-color: white;
+							border-radius: 50%;
+						}
+
+						/* Respect reduced motion preference */
+						@media (prefers-reduced-motion: reduce) {
+							.request-button,
+							.icon-wrapper,
+							.diag-line { transition: none !important; }
+						}
+					</style>
+
+					<div id="hr-platform-local">
+						<div class="hr-body">
+							<div id="hr-platform-container">
+								<img src="https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png" alt="Person 1" class="avatar avatar-left"> -->
+								<!-- <img src="https://img.freepik.com/premium-photo/passport-photo-portrait-young-man-white-background_1028938-330516.jpg?w=2000" alt="Person 2" class="avatar avatar-right">
+
+								<div class="graphic-container" aria-hidden="true">
+									<div class="connecting-line"></div> -->
+
+									<!-- two diagonal connecting lines at 45° and 135° with length 7cm -->
+									<!-- <div class="diag-line diag-45" aria-hidden="true"></div>
+									<div class="diag-line diag-135" aria-hidden="true"></div> -->
+									
+
+									<!-- <div class="graphic-item">
+										<div class="icon-wrapper icon-1" role="img" aria-label="Chat" style="background:#fff;padding:4px;">
+											<img src="https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png" alt="Person avatar" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block;">
+										</div>
+									</div> -->
+
+									<!-- <div class="graphic-item">
+										<div class="icon-wrapper icon-2" role="img" aria-label="Info">
+											<svg class="svg-icon" fill="currentColor" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
+										</div>
+									</div> -->
+
+									<!-- <div class="graphic-item">
+										<div class="icon-wrapper center-icon" role="img" aria-label="Success">
+											<svg class="svg-icon" fill="currentColor" width="50" height="60" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+										</div>
+									</div> -->
+
+									<!-- <div class="graphic-item">
+										<div class="icon-wrapper icon-4" role="img" aria-label="Shield">
+											<svg class="svg-icon" fill="currentColor" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12c5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg>
+										</div>
+									</div> -->
+
+									<!-- <div class="graphic-item">
+										<div class="icon-wrapper icon-5" role="img" aria-label="Observers">
+											<div class="icon-eyes">
+												<div class="eye"></div>
+												<div class="eye"></div>
+											</div>
+										</div>
+									</div>
+								</div> -->
+
+								<!-- <h1 class="headline" aria-level="1">All-in-one HR</h1>
+								<h1 class="headline" aria-level="1" >platform</h1>
+
+								<p class="subtext">
+									CoreyHR is a modern, all-in-one HR platform designed to perfectly fit your business needs.
+								</p> -->
+
+								<!-- <button class="request-button" type="button">
+									Request a demo
+								</button>
+							</div>
+						</div>
+					</div>
+				</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<div id="pagepiling"></div>
+				<div class="section" id="section1">
+					<style>
+						#hr-platform-local {
+							font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+						}
+
+						#hr-platform-local .hr-body {
+							margin: 0;
+							padding: 0;
+							background-color: transparent;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						}
+
+						/* --- Main Container Styling --- */
+						#hr-platform-container {
+							background-color: white;
+							border-radius: 16px;
+							box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+							padding: 60px 40px;
+							text-align: center;
+							max-width: 1100px;
+							width: 90%;
+							margin: 20px auto;
+							position: relative; /* Crucial for absolute positioning of graphics */
+							overflow: hidden;
+						}
+
+						/* --- Text Styling --- */
+						.headline {
+							font-size: 2.2vw;
+							font-weight: 900;
+							color: #1a1a1a;
+							line-height: 1.1;
+							margin-top: 0px;
+						}
+
+						.subtext {
+							font-size: 16px;
+							color: #6a6a6a;
+							margin-top: 15px;
+							max-width: 450px;
+							margin-left: auto;
+							margin-right: auto;
+							line-height: 1.5;
+						}
+
+						/* --- Button Styling --- */
+						.request-button {
+							background-color: #ff6f4e;
+							color: white;
+							border: none;
+							padding: 12px 28px;
+							font-size: 16px;
+							font-weight: 600;
+							border-radius: 10px;
+							cursor: pointer;
+							margin-top: 30px;
+							transition: background-color 0.2s;
+							box-shadow: 0 4px 10px rgba(255, 111, 78, 0.4);
+							display: block; /* Make it a block element to center it */
+							margin-left: auto;
+							margin-right: auto;
+						}
+
+						.request-button:hover {
+							background-color: #e56447;
+						}
+
+						/* --- Graphical Layout (Flexbox) --- */
+						.graphic-container {
+							position: relative;
+							height: 150px;
+							margin-bottom: 20px;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							padding: 0 10%;
+						}
+
+						/* Connecting Line (Dashed) */
+						.connecting-line {
+							position: absolute;
+							top: 50%;
+							left: 10%;
+							right: 10%;
+							height: 2px;
+							background: repeating-linear-gradient(
+								to right,
+								#ccc,
+								#ccc 5px,
+								transparent 5px,
+								transparent 10px
+							);
+							transform: translateY(-50%);
+							z-index: 1;
+						}
+
+						/* Diagonal lines: 45° and 135° with fixed length 7cm */
+						.diag-line{
+							position: absolute;
+							left: 50%;
+							top: 50%;
+							width: 15cm;              /* requested fixed length */
+							height: 2px;
+							background: repeating-linear-gradient(
+								to right,
+								#ccc,
+								#ccc 5px,
+								transparent 5px,
+								transparent 10px
+							);
+							transform-origin: center center;
+							/* center the line on the container center then rotate */
+							transform: translate(-50%,-50%);
+							z-index: 1;
+							border-radius: 1px;
+						}
+						/* 45 degrees */
+						.diag-45{ transform: translate(-50%,-50%) rotate(10deg); }
+						/* 135 degrees */
+						.diag-135{ transform: translate(-50%,-50%) rotate(170deg); }
+
+						/* Icon Wrapper Styles */
+						.icon-wrapper {
+							width: 60px;
+							height: 60px;
+							border-radius: 16px;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							position: relative;
+							z-index: 2;
+							box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+						}
+
+						.icon-wrapper.center-icon {
+							width: 80px;
+							height: 80px;
+							border-radius: 20px;
+							background-color: #925cff; /* Purple */
+							box-shadow: 0 6px 15px rgba(146, 92, 255, 0.5);
+						}
+
+						/* Specific Icon Colors */
+						.icon-1 { background-color: #ffc844; } /* Yellow */
+						.icon-2 { background-color: #69c0ff; } /* Light Blue */
+						.icon-4 { background-color: #ff5c77; } /* Red/Pink */
+						.icon-5 { background-color: #eaeaea; } /* Light Gray/White for eyes */
+
+						/* Avatars/Images */
+						.avatar {
+							width: 50px;
+							height: 50px;
+							border-radius: 50%;
+							position: absolute;
+							object-fit: cover;
+							border: 3px solid white;
+							box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+							z-index: 3;
+						}
+
+						.avatar-left { top: 20%; left: 5%; }
+						.avatar-right { top: 60%; right: 5%; }
+
+						/* place a graphic item below the left avatar */
+						.graphic-item.below-left {
+							position: absolute;
+							left: 5%;
+							/* place it a little below the avatar-left (avatar height + spacing) */
+							top: calc(20% + 60px);
+							z-index: 2;
+							transform: translateX(0);
+						}
+
+						/* Eye Icon Detail */
+						.icon-eyes {
+							width: 100%;
+							height: 100%;
+							display: flex;
+							justify-content: space-around;
+							align-items: center;
+						}
+						.eye {
+							width: 15px;
+							height: 15px;
+							background-color: #1a1a1a;
+							border-radius: 50%;
+							position: relative;
+						}
+						.eye::after {
+							content: '';
+							position: absolute;
+							top: 3px;
+							left: 3px;
+							width: 4px;
+							height: 4px;
+							background-color: white;
+							border-radius: 50%;
+						}
+
+						/* Respect reduced motion preference */
+						@media (prefers-reduced-motion: reduce) {
+							.request-button,
+							.icon-wrapper,
+							.diag-line { transition: none !important; }
+						}
+					</style>
+
+					<div id="hr-platform-local">
+						<div class="hr-body">
+							<div id="hr-platform-container">
+								<!-- <img src="https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png" alt="Person 1" class="avatar avatar-left"> -->
+								<img src="https://img.freepik.com/premium-photo/passport-photo-portrait-young-man-white-background_1028938-330516.jpg?w=2000" alt="Person 2" class="avatar avatar-right">
+
+								<div class="graphic-container" aria-hidden="true">
+									<div class="connecting-line"></div>
+
+									<!-- two diagonal connecting lines at 45° and 135° with length 7cm -->
+									<div class="diag-line diag-45" aria-hidden="true"></div>
+									<div class="diag-line diag-135" aria-hidden="true"></div>
+									
+
+									<div class="graphic-item">
+										<div class="icon-wrapper icon-1" role="img" aria-label="Chat" style="background:#fff;padding:4px;">
+											<img src="https://www.seekpng.com/png/detail/60-604032_face-businessman-png-dummy-images-for-testimonials.png" alt="Person avatar" style="width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block;">
+										</div>
+									</div>
+
+									<div class="graphic-item below-left">
+										<div class="icon-wrapper icon-2" role="img" aria-label="Info">
+											<svg class="svg-icon" fill="currentColor" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10s10-4.5 10-10S17.5 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
+										</div>
+									</div>
+
+									<div class="graphic-item">
+										<div class="icon-wrapper center-icon" role="img" aria-label="Success">
+											<svg class="svg-icon" fill="currentColor" width="50" height="60" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+										</div>
+									</div>
+
+									<div class="graphic-item">
+										<div class="icon-wrapper icon-5" role="img" aria-label="Observers">
+											<div class="icon-eyes">
+												<div class="eye"></div>
+												<div class="eye"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<h1 class="headline" aria-level="1">All-in-one HR</h1>
+								<h1 class="headline" aria-level="1" >platform</h1>
+
+								<p class="subtext">
+									CoreyHR is a modern, all-in-one HR platform designed to perfectly fit your business needs.
+								</p>
+
+								<button class="request-button" type="button">
+									Request a demo
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================================================================================================================================================================================		 -->
+
+		
+	    <div class="section" id="section2">
+	    	<div class="intro">
+	    		<div id="colors"></div>
+	    		<h1>jQuery plugin</h1>
+	    		<p>Pile your sections one over another and access them scrolling or by URL!</p>
+	    		<div id="markup">
+	    			<!-- <script src="https://gist.github.com/alvarotrigo/4a87a4b8757d87df8a72.js"></script> -->
+	    		</div>
+	    	</div>
+	    </div>
+
+
+
+
+<!-- ==================================================================================================================================================================================		 -->
+
+
+
+
+	    <div class="section" id="section3">
+	    	<div class="intro">
+	    		<h1>Configurable</h1>
+	    		<p>Plenty of options, methods and callbacks to use.</p>
+	    		<div id="colors2"></div>
+	    		<div id="colors3"></div>
+	    	</div>
+	    </div>
+	    <div class="section" id="section4">
+	    	<div class="intro">
+	    		<h1>Compatible</h1>
+	    		<p>Designed to work on tablet and mobile devices.</p>
+	    		<p>Oh! And its compatible with old browsers such as IE 8 or Opera 12!</p>
+	    	</div>
+	    </div>
+		
+	</div>
+
+	
+	<!-- ==================================================================================================================================================================================		 -->
+
+
+
+
+</body>
+</html>

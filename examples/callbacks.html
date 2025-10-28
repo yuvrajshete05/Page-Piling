@@ -1,121 +1,440 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!-- <!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>pagePiling.js plugin - Callbacks</title>
-	<meta name="author" content="Alvaro Trigo Lopez" />
-	<meta name="description" content="pagePiling.js plugin by Alvaro Trigo." />
-	<meta name="keywords"  content="pile,piling,piling.js,stack,pages,scrolling,stacking,touch,fullpile,scroll,plugin,jquery" />
-	<meta name="Resource-type" content="Document" />
-
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:300,400,700" />
-	<link rel="stylesheet" type="text/css" href="../jquery.pagepiling.css" />
-	<link rel="stylesheet" type="text/css" href="examples.css" />
-
-	<!--[if IE]>
-		<script type="text/javascript">
-			 var console = { log: function() {} };
-		</script>
-	<![endif]-->
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-
-	<script type="text/javascript" src="../jquery.pagepiling.min.js"></script>
-	<script type="text/javascript">
-		var deleteLog = false;
-
-		$(document).ready(function() {
-	    	$('#pagepiling').pagepiling({
-	    		menu: '#menu',
-	    		anchors: ['page1', 'page2', 'page3'],
-			    sectionsColor: ['#bfda00', '#2ebe21', '#2C3E50', '#51bec4'],
-			    onLeave: function(index, nextIndex, direction){
-			    	if(deleteLog){
-			    		$('#callbacksDiv').html('');
-			    	}
-			    	$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
-			    },
-			    afterRender: function(){
-			    	$('#callbacksDiv').append('<p>afterRender</p>');
-			    },
-			    afterLoad: function(anchorLink, index){
-			    	$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
-
-			    	//section 2
-					if(index == 2){
-						//moving the image
-						$('#section2').find('.intro').delay(100).animate({
-							left: '0%'
-						}, 1500, 'easeOutExpo', function(){
-							$('#section2').find('p').first().fadeIn(700, function(){
-								$('#section2').find('p').last().fadeIn(600);
-							});
-						});
-
-
-					}
-
-					//section 3
-					if(anchorLink == 'page3'){
-						//section 3
-						$('#section3').find('.intro').delay(100).animate({
-								left: '0%'
-						}, 1500, 'easeOutExpo');
-					}
-
-					deleteLog = true;
-			    }
-			});
-	    });
-    </script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core HR Solutions UI - Corrected 8 Images</title>
     <style>
-    #section2 .intro{
-    	left: -150%;
-		position: relative;
-    }
-    #section2 p{
-    	display: none;
-    }
-    #section3 .intro{
-    	left: 140%;
-		position: relative;
-    }
-    </style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Hide potential scrollbar from absolute elements */
+        }
 
+        /* Main Wrapper */
+        .ui-wrapper {
+            max-width: 1400px; /* Increased size to accommodate more images */
+            width: 90%;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The Card/Image Style */
+        .image-card {
+            width: 120px;
+            height: 160px;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            /* Frosted Glass Effect */
+            backdrop-filter: blur(8px) saturate(180%);
+            -webkit-backdrop-filter: blur(8px) saturate(180%);
+            position: absolute; /* Allows precise placement */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1; /* Below the center content */
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* To simulate the blurred/ghosted look on some images */
+            filter: grayscale(10%) brightness(105%); 
+        }
+
+        /* ABSOLUTE POSITIONING FOR 8 CARDS (Approximation) */
+        
+        /* Left Column (4 images) */
+        .img-l-1 { top: 5%; left: 0px; filter: blur(1.5px); } /* Top Left - Blurred */
+        .img-l-2 { top: 15%; left: 150px; } /* 2nd from top - Closer to center */
+        .img-l-3 { top: 40%; left: 0px; } /* 3rd from top */
+        .img-l-4 { top: 55%; left: 150px; } /* Bottom Left - Closer to center */
+
+        /* Right Column (4 images) */
+        .img-r-1 { top: 5%; right: 0px; } /* Top Right */
+        .img-r-2 { top: 15%; right: 150px; } /* 2nd from top - Closer to center */
+        .img-r-3 { top: 40%; right: 0px; } /* 3rd from top */
+        .img-r-4 { top: 55%; right: 150px; } /* Bottom Right - Closer to center */
+
+
+        /* Center Content Styling */
+        .center-content {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .icon-box {
+            width: 55px;
+            height: 55px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-size: 3.2em;
+            color: #333;
+            line-height: 1.1;
+            margin: 0 0 10px 0;
+            font-weight: 400; /* Normal weight */
+        }
+
+        h1 strong {
+            font-weight: 700; /* Bold for "HR solutions" */
+        }
+
+        p {
+            color: #777;
+            font-size: 1em;
+            margin: 0 0 30px 0;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .learn-more-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #a64dff, #8e44ad);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1em;
+            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.5);
+        }
+        
+        /* Bottom Gray Element */
+        .bottom-circle-segment {
+            position: absolute;
+            bottom: -50px; /* Moves the center down */
+            width: 450px;
+            height: 150px;
+            background-color: #e0e0e0;
+            border-radius: 50% / 100% 100% 0 0; /* Creates the rounded top segment */
+            z-index: 5;
+        }
+
+        /* Watermark/Logo Approximation */
+        .watermark {
+            position: absolute;
+            top: 150px;
+            right: 150px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 0.9em;
+            font-weight: bold;
+            transform: rotate(5deg);
+            z-index: 10;
+        }
+        .watermark-ig {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 1.5em;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+    </style>
 </head>
 <body>
 
-	<ul id="menu">
-		<li data-menuanchor="page1" class="active"><a href="#page1">Page 1</a></li>
-		<li data-menuanchor="page2"><a href="#page2">Page 2</a></li>
-		<li data-menuanchor="page3"><a href="#page3">Page 3</a></li>
-	</ul>
+    <div class="ui-wrapper">
+        
+        <div class="image-card img-l-1" style="left: 100px; top: 100px;">
+            <img src="https://via.placeholder.com/120x160/cccccc/333333?text=P+L1" alt="Person Left 1">
+        </div>
+        <div class="image-card img-l-2" style="left: 20px; top: 180px;">
+            <img src="https://via.placeholder.com/120x160/dddddd/333333?text=P+L2" alt="Person Left 2">
+        </div>
+        <div class="image-card img-l-3" style="left: 100px; top: 320px;">
+            <img src="https://via.placeholder.com/120x160/eeeeee/333333?text=P+L3" alt="Person Left 3">
+        </div>
+        <div class="image-card img-l-4" style="left: 20px; top: 400px;">
+            <img src="https://via.placeholder.com/120x160/f0f0f0/333333?text=P+L4" alt="Person Left 4">
+        </div>
 
-	<div style="position:fixed;top:50px;left:50px;color:white;z-index:999;" id="callbacksDiv"></div>
+        <div class="image-card img-r-1" style="right: 100px; top: 100px;">
+            <img src="https://via.placeholder.com/120x160/f8f8f8/333333?text=P+R1" alt="Person Right 1">
+        </div>
+        <div class="image-card img-r-2" style="right: 20px; top: 180px;">
+            <img src="https://via.placeholder.com/120x160/ffffff/333333?text=P+R2" alt="Person Right 2">
+        </div>
+        <div class="image-card img-r-3" style="right: 100px; top: 320px;">
+            <img src="https://via.placeholder.com/120x160/e0e0e0/333333?text=P+R3" alt="Person Right 3">
+        </div>
+        <div class="image-card img-r-4" style="right: 20px; top: 400px;">
+            <img src="https://via.placeholder.com/120x160/d0d0d0/333333?text=P+R4" alt="Person Right 4">
+        </div>
 
-	<div id="pagepiling">
-	    <div class="section" id="section1">
-	    	<h1>Callbacks</h1>
-			<p>Totally open to your imagination!</p>
-			<br />
-	    </div>
-	    <div class="section" id="section2">
-	    	<div class="intro">
-	    		<h1>Feel free</h1>
-	    		<p>All the callbacks you need to do whatever you need.</p>
-	    		<p>Just what you would expect.</p>
-	    	</div>
-	    </div>
-	    <div class="section" id="section4">
-	    	<div class="intro">
-	    		<h1>Ideal for animations</h1>
-	    		<p>Total control over your website.</p>
-	    	</div>
-	    </div>
-	</div>
+
+        <div class="center-content">
+            
+            <div class="icon-box">
+                <div style="width: 25px; height: 25px; border-radius: 50%; background-color: #9b59b6; position: relative;">
+                    <div style="width: 15px; height: 10px; border-radius: 0 0 5px 5px; background-color: #9b59b6; position: absolute; bottom: 0; left: 5px;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #fff; position: absolute; top: 3px; left: 6.5px;"></div>
+                </div>
+            </div>
+
+            <h1>
+                Core <br> <strong>HR solutions</strong>
+            </h1>
+            
+            <p>
+                Streamline HR processes in one centralized platform, enhancing team transparency
+            </p>
+
+            <a href="#" class="learn-more-btn">
+                Learn more
+            </a>
+        </div>
+        
+        <div class="watermark-ig">@</div>
+        <div class="watermark">@WEBSITEHUB.CO</div>
+
+        <div class="bottom-circle-segment"></div>
+
+    </div>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core HR Solutions UI - FINAL Layout Correction</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; 
+        }
+
+        /* Main Wrapper */
+        .ui-wrapper {
+            max-width: 1400px;
+            width: 90%;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The Card/Image Style */
+        .image-card {
+            width: 130px; /* Slight increase in size for better visual weight */
+            height: 180px;
+            border-radius: 18px; /* Softer rounded corners */
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.15); /* More visible background for frosted effect */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            
+            /* Frosted Glass Effect - KEY TO THE DESIGN */
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            
+            position: absolute; 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(105%); 
+        }
+
+        /* ABSOLUTE POSITIONING FOR 8 CARDS (Precise Match) */
+        /* Positions are relative to the center, simulating the floating appearance */
+        
+        /* Left Column (4 images) */
+        .img-l-1 { top: 20px; left: 0px; filter: blur(2px); opacity: 0.9; } /* Top Left - Blurred/Faded */
+        .img-l-2 { top: 180px; left: 130px; } /* Second card - Closer to center, middle-upper */
+        .img-l-3 { top: 300px; left: 0px; } /* Third card - Far left, middle-lower */
+        .img-l-4 { bottom: 0px; left: 130px; } /* Bottom Left - Closer to center, bottom-most */
+
+        /* Right Column (4 images) */
+        .img-r-1 { top: 20px; right: 0px; } /* Top Right */
+        .img-r-2 { top: 180px; right: 130px; } /* Second card - Closer to center, middle-upper */
+        .img-r-3 { top: 300px; right: 0px; } /* Third card - Far right, middle-lower */
+        .img-r-4 { bottom: 0px; right: 130px; } /* Bottom Right - Closer to center, bottom-most */
+
+
+        /* Center Content Styling */
+        .center-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 400px;
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3.5em; /* Larger font size */
+            color: #1a1a1a;
+            line-height: 1.1;
+            margin: 0 0 10px 0;
+            font-weight: 400; 
+        }
+
+        h1 strong {
+            font-weight: 800; /* Extra bold for emphasis */
+        }
+
+        p {
+            color: #666;
+            font-size: 1em;
+            margin: 0 0 40px 0;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .learn-more-btn {
+            display: inline-block;
+            padding: 14px 35px; /* Bigger button */
+            background: linear-gradient(135deg, #a64dff, #8e44ad);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05em;
+            box-shadow: 0 8px 25px rgba(155, 89, 182, 0.5);
+        }
+        
+        /* Bottom Gray Element */
+        .bottom-circle-segment {
+            position: absolute;
+            bottom: -50px;
+            width: 500px; /* Wider to match the image better */
+            height: 180px;
+            background-color: #d0d0d0;
+            border-radius: 50% / 100% 100% 0 0;
+            z-index: 5;
+        }
+
+        /* Watermark/Logo Approximation */
+        .watermark {
+            position: absolute;
+            top: 220px;
+            right: 140px;
+            color: rgba(0, 0, 0, 0.4);
+            font-size: 0.9em;
+            font-weight: bold;
+            transform: rotate(5deg);
+            z-index: 10;
+        }
+        .watermark-ig {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 1.8em;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="ui-wrapper">
+        
+        <div class="image-card img-l-1">
+            <img src="https://via.placeholder.com/130x180/cccccc/333333?text=P+L1" alt="Person Left 1">
+        </div>
+        <div class="image-card img-l-2">
+            <img src="https://via.placeholder.com/130x180/dddddd/333333?text=P+L2" alt="Person Left 2">
+        </div>
+        <div class="image-card img-l-3">
+            <img src="https://via.placeholder.com/130x180/eeeeee/333333?text=P+L3" alt="Person Left 3">
+        </div>
+        <div class="image-card img-l-4">
+            <img src="https://via.placeholder.com/130x180/f0f0f0/333333?text=P+L4" alt="Person Left 4">
+        </div>
+
+        <div class="image-card img-r-1">
+            <img src="https://via.placeholder.com/130x180/f8f8f8/333333?text=P+R1" alt="Person Right 1">
+        </div>
+        <div class="image-card img-r-2">
+            <img src="https://via.placeholder.com/130x180/ffffff/333333?text=P+R2" alt="Person Right 2">
+        </div>
+        <div class="image-card img-r-3">
+            <img src="https://via.placeholder.com/130x180/e0e0e0/333333?text=P+R3" alt="Person Right 3">
+        </div>
+        <div class="image-card img-r-4">
+            <img src="https://via.placeholder.com/130x180/d0d0d0/333333?text=P+R4" alt="Person Right 4">
+        </div>
+
+
+        <div class="center-content">
+            
+            <div class="icon-box">
+                <div style="width: 25px; height: 25px; border-radius: 50%; background-color: #9b59b6; position: relative;">
+                    <div style="width: 15px; height: 10px; border-radius: 0 0 5px 5px; background-color: #9b59b6; position: absolute; bottom: 0; left: 5px;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: #fff; position: absolute; top: 3px; left: 6.5px;"></div>
+                </div>
+            </div>
+
+            <h1>
+                Core <br> <strong>HR solutions</strong>
+            </h1>
+            
+            <p>
+                Streamline HR processes in one centralized platform, enhancing team transparency
+            </p>
+
+            <a href="#" class="learn-more-btn">
+                Learn more
+            </a>
+        </div>
+        
+        <div class="watermark-ig">@</div>
+        <div class="watermark">@WEBSITEHUB.CO</div>
+
+        <div class="bottom-circle-segment"></div>
+
+    </div>
 
 </body>
 </html>

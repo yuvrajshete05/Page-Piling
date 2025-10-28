@@ -36,7 +36,6 @@ html, body {
 }
 #pp-nav {
     position: fixed;
-    z-index: 100;
     margin-top: -32px;
     top: 50%;
     opacity: 1;
@@ -52,6 +51,7 @@ html, body {
 }
 .pp-tableCell {
     display: table-cell;
+    background-color: white;
     vertical-align: middle;
     width: 100%;
     height: 100%;
